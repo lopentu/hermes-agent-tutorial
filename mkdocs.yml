@@ -11,6 +11,7 @@ theme:
   features:
     - navigation.top
     - toc.follow
+    - content.code.copy
 
 extra_css:
   - stylesheets/extra.css

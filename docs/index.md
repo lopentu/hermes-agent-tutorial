@@ -372,16 +372,6 @@ rm -f ~/.hermes/gateway.pid
 hermes gateway start
 ```
 
-### terminal 或 file 工具無法使用
-
-執行 `hermes doctor` 檢查：
-
-```bash
-hermes doctor 2>/dev/null | grep -E "terminal|file"
-```
-
-如果顯示 `system dependency not met`，可能需要安裝 Docker（例如 [OrbStack](https://orbstack.dev/) 或 [Docker Desktop](https://www.docker.com/products/docker-desktop/)）。
-
 ### Bot 說「我沒有 terminal 工具」
 
 這通常是 Gemini 3 系列模型的相容性問題。請使用以下模型：
@@ -413,6 +403,64 @@ hermes gateway start
 | gemini-2.5-pro | 免費（有限） | 最強推理能力 | 複雜任務 |
 
 > 💡 如果你的電腦有 16GB 以上記憶體，也可以用 [Ollama](https://ollama.com/) 跑本地模型（例如 `qwen3:8b`），完全離線、不花 API 費用，但需要更多設定。
+
+---
+
+## 加分作業
+
+完成基本設定後，挑戰以下兩個任務，二選一或全做。
+
+### 任務一：自訂 Agent 的角色（System Prompt）
+
+Hermes 的個性存在 `~/.hermes/SOUL.md` 這個檔案，直接編輯它就能改變 Agent 的行為規則。
+
+**步驟：**
+
+1. 在終端機開啟檔案：
+
+```bash
+nano ~/.hermes/SOUL.md
+```
+
+2. 在最上方加入你的規則，例如：
+
+```
+你是台大語言學系的助教，叫做小幫。每次回覆都要用繁體中文，語氣要親切。
+```
+
+3. 按 `Ctrl + X`，再按 `Y`，再按 Enter 儲存。
+
+4. 重啟 Gateway：
+
+```bash
+pkill -f hermes
+rm -f ~/.hermes/gateway.pid
+hermes gateway start
+```
+
+5. 到 Telegram 輸入 `/reset`，然後傳一則訊息，確認 Agent 的回應符合你設定的角色。
+
+**成功標準**：Bot 的回應反映出你設定的個性或規則。
+
+---
+
+### 任務二：Tool Calling
+
+給 Agent 一個需要用工具才能完成的任務，觀察它如何自動選擇工具。
+
+傳送以下其中一個指令：
+
+```
+幫我對這段文字做中文斷詞：「生成式人工智慧正在改變人文學科的研究方式」
+```
+
+或：
+
+```
+查今天台北的天氣
+```
+
+**成功標準**：Bot 自動呼叫工具完成任務，回傳實際結果，而不只是用文字說明怎麼做。
 
 ---
 
