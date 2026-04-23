@@ -19,8 +19,10 @@
   margin-top: -1.4rem;
 }
 
-.md-typeset table {
-  font-size: inherit;
+.md-typeset table,
+.md-typeset table th,
+.md-typeset table td {
+  font-size: inherit !important;
 }
 
 .md-typeset h1 + p + h3 {
