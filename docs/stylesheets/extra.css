@@ -8,6 +8,17 @@
   }
 }
 
-.md-nav {
-  font-size: 1rem;
+.md-nav,
+.md-nav__item,
+.md-nav__link,
+.md-nav__title {
+  font-size: 0.85rem !important;
+}
+
+.md-typeset h1 + p {
+  margin-top: -1.4rem;
+}
+
+.md-typeset h1 + p + h3 {
+  margin-top: 0.2rem;
 }

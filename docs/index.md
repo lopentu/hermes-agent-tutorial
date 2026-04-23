@@ -1,8 +1,10 @@
-# 打造你的 AI Agent：用 Hermes Agent + Gemini + Telegram 從零開始
+# 生成式 AI 的人文導論
 
-> 這份教學帶你在自己的電腦上架設 AI Agent，透過 Telegram 隨時跟它對話，還能叫它執行程式碼、操作檔案。不需要任何程式經驗。
+*2026 年 4 月 24 日*
 
-**課程**：2026 生成式 AI 人文導論　｜　**日期**：2026 年 4 月 24 日
+### 打造你的 AI Agent：用 Hermes Agent + Gemini + Telegram 從零開始
+
+> 這份教學帶你在自己的電腦上架設 AI Agent，透過 Telegram 隨時跟它對話，還能叫它執行程式碼、操作檔案。
 
 ---
 
