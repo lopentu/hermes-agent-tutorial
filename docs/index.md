@@ -352,6 +352,7 @@ HTTP 429 (RESOURCE_EXHAUSTED): You exceeded your current quota
 這是 Gemini 免費方案的限制（每分鐘約 20 次請求）。
 
 **解決方式**：
+
 - 等 1-2 分鐘再試，每次提問之間不要太快連續傳訊息
 - 或切換到其他模型：執行 `hermes model`，選擇 `gemini-2.5-flash` 或 `gemini-2.5-flash-lite`
 
