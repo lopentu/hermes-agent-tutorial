@@ -1,4 +1,4 @@
-site_name: 打造你的 AI Agent
+site_name: Hermes Agent 教學
 site_description: 用 Hermes Agent + Gemini + Telegram 從零開始
 site_url: https://lopentu.github.io/hermes-agent-tutorial/
 
@@ -11,6 +11,9 @@ theme:
   features:
     - navigation.top
     - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
 
 markdown_extensions:
   - toc:
