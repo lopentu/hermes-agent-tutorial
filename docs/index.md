@@ -443,9 +443,9 @@ hermes gateway start
 
 **繳交格式**：`.txt` 或 `.md` 檔，需包含：
 
-1. 修改前：傳一則訊息給 Bot，附上 Bot 的回應
-2. 修改後：傳相同的訊息，附上 Bot 的回應
-3. 你在 `SOUL.md` 中加入的規則內容
+1. 修改前：你問的問題，以及 Agent 的回答
+2. 你加入 `SOUL.md` 的 system prompt 內容
+3. 修改後：相同的問題，以及 Agent 的回答（應與修改前不同）
 
 ---
 
