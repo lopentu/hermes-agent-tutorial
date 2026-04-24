@@ -405,11 +405,11 @@ hermes gateway start
 
 ---
 
-## 加分作業
+## 作業
 
-完成基本設定後，挑戰以下兩個任務，二選一或全做。
+完成基本設定後，完成以下作業。
 
-### 任務一：自訂 Agent 的角色（System Prompt）
+### 作業：自訂 Agent 的角色（System Prompt）
 
 Hermes 的個性存在 `~/.hermes/SOUL.md` 這個檔案，直接編輯它就能改變 Agent 的行為規則。
 
@@ -441,9 +441,15 @@ hermes gateway start
 
 **成功標準**：Bot 的回應反映出你設定的個性或規則。
 
+**繳交格式**：`.txt` 或 `.md` 檔，需包含：
+
+1. 修改前：傳一則訊息給 Bot，附上 Bot 的回應
+2. 修改後：傳相同的訊息，附上 Bot 的回應
+3. 你在 `SOUL.md` 中加入的規則內容
+
 ---
 
-### 任務二：Tool Calling
+### 加分作業：Tool Calling
 
 給 Agent 一個需要用工具才能完成的任務，觀察它如何自動選擇工具。任務不限，以下是幾個範例供參考：
 
