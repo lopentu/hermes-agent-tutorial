@@ -1,0 +1,1958 @@
+
+<!doctype html>
+<html lang="zh-TW" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="用 Hermes Agent + Gemini + Telegram 從零開始">
+      
+      
+      
+        <link rel="canonical" href="https://lopentu.github.io/hermes-agent-tutorial/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Hermes Agent 教學</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="stylesheets/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ai" class="md-skip">
+          跳轉到
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="頁首">
+    <a href="." title="Hermes Agent 教學" class="md-header__button md-logo" aria-label="Hermes Agent 教學" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hermes Agent 教學
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              生成式 AI 的人文導論
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="搜尋">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清除" aria-label="清除" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="導覽列" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Hermes Agent 教學" class="md-nav__button md-logo" aria-label="Hermes Agent 教學" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Hermes Agent 教學
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成式 AI 的人文導論
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    生成式 AI 的人文導論
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ai-agent-hermes-agent-gemini-telegram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        打造你的 AI Agent：用 Hermes Agent + Gemini + Telegram 從零開始
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        為什麼要學這個？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="為什麼要學這個？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#llm-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一般 LLM 和 AI Agent 有什麼不同？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hermes-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        為什麼選 Hermes Agent？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        今天的目標
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        環境需求
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1：基本準備
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1：基本準備">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-telegram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 安裝 Telegram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gemini-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 申請 Gemini API Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 確認系統環境
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-telegram-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2：建立 Telegram Bot
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2：建立 Telegram Bot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-botfather-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 跟 BotFather 申請 Bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 測試 Bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-hermes-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3：安裝 Hermes Agent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3：安裝 Hermes Agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 一鍵安裝
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 設定精靈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 允許所有使用者存取
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4：測試你的 AI Agent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 4：測試你的 AI Agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 基本對話
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 執行終端機指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 操作檔案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 想想看：還能做什麼？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5：日常使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 5：日常使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        啟動 Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        停止 Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切換模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重設對話
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        檢查問題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常見問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常見問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bot 沒有回應
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        看到 Rate Limit 錯誤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unauthorized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        看到 Unauthorized 錯誤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bot-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bot 說「我沒有 terminal 工具」
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型選擇指南
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        作業
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="作業">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        作業：自訂 Agent 的角色（System Prompt）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        加分作業：Tool Calling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        延伸閱讀
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附錄：Windows 使用者完整指南
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="附錄：Windows 使用者完整指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wsl2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 1：安裝 WSL2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 2：更新系統套件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 3：確認 Python 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-hermes-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 4：安裝 Hermes Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 5：啟動 Gateway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows 使用者的注意事項
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常見的 Windows 專屬問題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ai-agent-hermes-agent-gemini-telegram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        打造你的 AI Agent：用 Hermes Agent + Gemini + Telegram 從零開始
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        為什麼要學這個？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="為什麼要學這個？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#llm-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一般 LLM 和 AI Agent 有什麼不同？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hermes-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        為什麼選 Hermes Agent？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        今天的目標
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        環境需求
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1：基本準備
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1：基本準備">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-telegram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 安裝 Telegram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gemini-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 申請 Gemini API Key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 確認系統環境
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-telegram-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2：建立 Telegram Bot
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2：建立 Telegram Bot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-botfather-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 跟 BotFather 申請 Bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 測試 Bot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-3-hermes-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3：安裝 Hermes Agent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 3：安裝 Hermes Agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 一鍵安裝
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 設定精靈
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 允許所有使用者存取
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-4-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 4：測試你的 AI Agent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 4：測試你的 AI Agent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 基本對話
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 執行終端機指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 操作檔案
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 想想看：還能做什麼？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 5：日常使用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 5：日常使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        啟動 Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        停止 Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切換模型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重設對話
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        檢查問題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常見問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="常見問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bot 沒有回應
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        看到 Rate Limit 錯誤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unauthorized" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        看到 Unauthorized 錯誤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bot-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bot 說「我沒有 terminal 工具」
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型選擇指南
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        作業
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="作業">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        作業：自訂 Agent 的角色（System Prompt）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        加分作業：Tool Calling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        延伸閱讀
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附錄：Windows 使用者完整指南
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="附錄：Windows 使用者完整指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wsl2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 1：安裝 WSL2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 2：更新系統套件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 3：確認 Python 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-hermes-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 4：安裝 Hermes Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        步驟 5：啟動 Gateway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows 使用者的注意事項
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常見的 Windows 專屬問題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ai">生成式 AI 的人文導論<a class="headerlink" href="#ai" title="Permanent link">&para;</a></h1>
+<p><em>2026 年 4 月 24 日</em></p>
+<h3 id="ai-agent-hermes-agent-gemini-telegram">打造你的 AI Agent：用 Hermes Agent + Gemini + Telegram 從零開始<a class="headerlink" href="#ai-agent-hermes-agent-gemini-telegram" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>這份教學帶你在自己的電腦上架設 AI Agent，透過 Telegram 隨時跟它對話，還能叫它執行程式碼、操作檔案。</p>
+</blockquote>
+<hr />
+<h2 id="_1">為什麼要學這個？<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="llm-ai-agent">一般 LLM 和 AI Agent 有什麼不同？<a class="headerlink" href="#llm-ai-agent" title="Permanent link">&para;</a></h3>
+<p>你可能已經用過 ChatGPT、Claude 或 Gemini 這些 AI 聊天工具。它們很聰明，能回答問題、寫文章、翻譯；但它們<strong>只能跟你聊天</strong>，沒辦法真的幫你做事。</p>
+<p><strong>AI Agent 不一樣。</strong> 它不只會說，還會<strong>動手做</strong>：</p>
+<p>Agent 的核心差異不在「能做什麼」，而在「如何做」——它能自主規劃、使用工具、並根據結果迭代調整。</p>
+<table>
+<thead>
+<tr>
+<th>能力維度</th>
+<th>一般 LLM</th>
+<th>AI Agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>回答問題</td>
+<td>✅ 主要能力：根據輸入生成文字回答</td>
+<td>✅ 具備：也能回答問題，但通常不只停在回答</td>
+</tr>
+<tr>
+<td>自主規劃與多步驟執行</td>
+<td>⚠️ 可協助分解任務，但多半需要使用者逐步指示與確認</td>
+<td>⭐ 核心能力：能自行規劃步驟、根據中間結果調整策略，並持續執行到目標完成</td>
+</tr>
+<tr>
+<td>使用外部工具</td>
+<td>⚠️ 可使用工具，但通常流程固定，工具由開發者預先設計</td>
+<td>⭐ 能根據任務需求動態選擇工具，例如搜尋、查資料庫、呼叫 API，並整合結果</td>
+</tr>
+<tr>
+<td>執行程式碼／操作檔案</td>
+<td>⚠️ 多半限於平台提供的沙盒環境，難以直接操作使用者本機</td>
+<td>✅ 可連接本地電腦、伺服器或開發環境，執行指令、讀寫檔案並根據結果調整下一步</td>
+</tr>
+<tr>
+<td>記憶與上下文</td>
+<td>✅ 可利用目前對話內容，也可能搭配記憶或 RAG 來回答問題</td>
+<td>⭐ 更強調任務狀態管理：能記錄任務進度、更新中間結果，並在後續步驟中主動取用</td>
+</tr>
+<tr>
+<td>串接外部平台</td>
+<td>⚠️ 多半只能在平台允許的範圍內使用，串接能力有限</td>
+<td>✅ 可串接外部平台，例如 Telegram、Discord、Slack 等，接收訊息、發送回覆或觸發自動化流程</td>
+</tr>
+</tbody>
+</table>
+<p>想像你要跑一個耗時的實驗或備份，不想乾等在電腦前。你掏出手機，傳一句話給你的 Bot：「開始備份桌面資料夾」或「執行這個分析程式」。Bot 立刻在你的電腦上動起來，你去吃飯、去上課，回來就完成了。這不是告訴你怎麼做，而是<strong>直接幫你做完</strong>。</p>
+<h3 id="hermes-agent">為什麼選 Hermes Agent？<a class="headerlink" href="#hermes-agent" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a> 是由 <a href="https://nousresearch.com/">Nous Research</a> 開發的開源 AI Agent 框架，有幾個特色讓它適合學習和使用：</p>
+<ul>
+<li><strong>開源授權（MIT）</strong>：可自由使用、修改與商用，方便教學與二次開發。</li>
+<li><strong>不綁定單一模型</strong>：可搭配雲端 API 或本地模型使用。</li>
+<li><strong>多平台串接</strong>：可透過 Telegram、Discord、Slack、WhatsApp 等平台與 Agent 互動。</li>
+<li><strong>記憶與技能系統</strong>：能從過去的任務中學習，把成功的流程自動整理成「技能」，下次遇到類似任務可以直接複用。</li>
+</ul>
+<h3 id="_2">今天的目標<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>基本目標</strong>：完成以下三件事就算成功</p>
+<ol>
+<li>串接成功：Telegram Bot 上線</li>
+<li>可以正常對話</li>
+<li>執行終端機指令並回傳結果</li>
+</ol>
+<p><strong>進階目標</strong>：基本目標完成後，我們再來挑戰</p>
+<ol>
+<li>自訂 Agent 的行為規則，例如叫它永遠用繁體中文回覆、或扮演特定角色</li>
+<li>讓 Agent 自己決定要用哪個工具完成任務，例如中文斷詞、查今天台北的天氣</li>
+</ol>
+<hr />
+<h2 id="_3">環境需求<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>作業系統</strong>：macOS 或 Linux（Windows 需要 <a href="https://learn.microsoft.com/zh-tw/windows/wsl/install">WSL2</a>）</li>
+<li><strong>記憶體</strong>：2GB 以上（使用雲端模型不需要大記憶體）</li>
+<li><strong>網路</strong>：需要連網</li>
+<li><strong>帳號</strong>：Google 帳號（申請 Gemini API Key）、Telegram 帳號</li>
+</ul>
+<hr />
+<h2 id="part-1">Part 1：基本準備<a class="headerlink" href="#part-1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>⚠️ <strong>Windows 使用者請注意</strong>：Hermes Agent 不支援原生 Windows，需要先安裝 WSL2。請先跳到本文最後的<a href="#附錄windows-使用者完整指南">「附錄：Windows 使用者完整指南」</a>完成 WSL2 設定後，再回來繼續。</p>
+</blockquote>
+<h3 id="11-telegram">1.1 安裝 Telegram<a class="headerlink" href="#11-telegram" title="Permanent link">&para;</a></h3>
+<p>如果你還沒有 Telegram，到 App Store 或 Google Play 搜尋「Telegram」下載並註冊帳號。</p>
+<h3 id="12-gemini-api-key">1.2 申請 Gemini API Key<a class="headerlink" href="#12-gemini-api-key" title="Permanent link">&para;</a></h3>
+<p>Gemini 是 Google 的 AI 模型，提供免費的 API 額度，足夠我們上課使用。</p>
+<ol>
+<li>前往 <a href="https://aistudio.google.com/apikey">Google AI Studio</a></li>
+<li>用你的 Google 帳號登入</li>
+<li>點擊「Create API Key」建立一組 API Key</li>
+<li><strong>複製並保存好這組 Key</strong>（格式像 <code>AIzaSy...</code>），上課會用到</li>
+</ol>
+<blockquote>
+<p>⚠️ API Key 等同密碼，不要分享給別人，也不要上傳到 GitHub。</p>
+</blockquote>
+<h3 id="13">1.3 確認系統環境<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
+<p>打開終端機（Terminal）：</p>
+<ul>
+<li><strong>Mac</strong>：按 <code>Cmd + 空格</code>，輸入「Terminal」，按 Enter</li>
+<li><strong>Windows</strong>：開啟 Ubuntu（WSL）終端（如果還沒安裝 WSL2，請先看<a href="#附錄windows-使用者完整指南">附錄</a>）</li>
+<li><strong>Linux</strong>：打開你的 Terminal</li>
+</ul>
+<p>輸入以下指令確認 Python 版本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>--version
+</code></pre></div>
+<p>需要 Python 3.11 以上。如果版本太舊或沒安裝，請先更新。</p>
+<hr />
+<h2 id="part-2-telegram-bot">Part 2：建立 Telegram Bot<a class="headerlink" href="#part-2-telegram-bot" title="Permanent link">&para;</a></h2>
+<p>我們需要一個 Telegram Bot 作為 AI Agent 的入口。</p>
+<h3 id="21-botfather-bot">2.1 跟 BotFather 申請 Bot<a class="headerlink" href="#21-botfather-bot" title="Permanent link">&para;</a></h3>
+<ol>
+<li>在 Telegram 搜尋 <strong>@BotFather</strong>，點進去開始對話</li>
+<li>輸入 <code>/newbot</code></li>
+<li>BotFather 會問你 Bot 的<strong>名稱</strong>（顯示名稱，隨意取），例如：<code>My AI Agent</code></li>
+<li>再問你 Bot 的<strong>使用者名稱</strong>（必須以 <code>bot</code> 結尾），例如：<code>my_ai_agent_2026_bot</code></li>
+<li>建立成功後，BotFather 會給你一組 <strong>Bot Token</strong>（格式像 <code>123456789:ABCdefGHI...</code>）</li>
+</ol>
+<blockquote>
+<p>⚠️ <strong>複製並保存好這組 Token</strong>，等一下設定 Hermes 時會用到。</p>
+</blockquote>
+<h3 id="22-bot">2.2 測試 Bot<a class="headerlink" href="#22-bot" title="Permanent link">&para;</a></h3>
+<p>在 Telegram 搜尋你剛才設定的 Bot 使用者名稱，點進去傳一則訊息。此時 Bot 不會回覆（因為還沒串接 Hermes），這是正常的。</p>
+<hr />
+<h2 id="part-3-hermes-agent">Part 3：安裝 Hermes Agent<a class="headerlink" href="#part-3-hermes-agent" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 一鍵安裝<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p>在終端機輸入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>安裝程式會自動處理所有相依套件，大約需要 2-5 分鐘。</p>
+<h3 id="32">3.2 設定精靈<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>安裝完成後，會自動進入設定精靈。依照以下步驟操作：</p>
+<p><strong>選擇 Provider：</strong></p>
+<p>用方向鍵移到 <code>Google AI Studio (Gemini models — native Gemini API)</code>，按 Enter。</p>
+<p><strong>輸入 API Key：</strong></p>
+<p>畫面會顯示：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GOOGLE_API_KEY (or Enter to cancel):
+</code></pre></div>
+<p>貼上你在 Part 1 申請的 Gemini API Key，按 Enter。</p>
+<blockquote>
+<p>💡 終端機貼上的快捷鍵：Mac 用 <code>Cmd + V</code>，Linux / WSL 用 <code>Ctrl + Shift + V</code>。</p>
+</blockquote>
+<p><strong>設定 Base URL：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Base URL [https://generativelanguage.googleapis.com/v1beta]:
+</code></pre></div>
+<p>直接按 Enter，使用預設值。</p>
+<p><strong>選擇模型：</strong></p>
+<p>選擇 <strong>gemini-2.5-flash-lite</strong>（免費額度最高、速度快、穩定性好）。</p>
+<blockquote>
+<p>💡 如果之後想換模型，隨時可以用 <code>hermes model</code> 指令切換。</p>
+</blockquote>
+<p><strong>串接 Telegram：</strong></p>
+<p>設定精靈會問是否串接訊息平台，選擇 <strong>Set up messaging now</strong>。</p>
+<p>在平台列表中，<strong>按空格鍵</strong>勾選 Telegram，然後按 Enter。</p>
+<p>畫面會顯示：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Telegram bot token:
+</code></pre></div>
+<p>貼上你在 Part 2 取得的 Bot Token，按 Enter。（同樣用 <code>Cmd + V</code> 或 <code>Ctrl + Shift + V</code>）</p>
+<p><strong>設定使用者權限：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Allowed user IDs (comma-separated, leave empty for open access):
+</code></pre></div>
+<p>直接按 Enter（留空表示所有人都能使用，上課方便測試）。</p>
+<p><strong>設定 Home Channel：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Home channel ID (leave empty to set later):
+</code></pre></div>
+<p>直接按 Enter，之後再設定。</p>
+<p><strong>重啟 Gateway：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Restart the gateway to pick up changes? [Y/n]:
+</code></pre></div>
+<p>按 <code>Y</code>。</p>
+<h3 id="33">3.3 允許所有使用者存取<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>Hermes 預設會擋住未授權的使用者。為了上課方便，開放所有人存取：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>hermes<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GATEWAY_ALLOW_ALL_USERS<span class="w"> </span><span class="nb">true</span>
+</code></pre></div>
+<p>然後重啟 Gateway：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pkill<span class="w"> </span>-f<span class="w"> </span>hermes
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>rm<span class="w"> </span>-f<span class="w"> </span>~/.hermes/gateway.pid
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<hr />
+<h2 id="part-4-ai-agent">Part 4：測試你的 AI Agent<a class="headerlink" href="#part-4-ai-agent" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 基本對話<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>打開 Telegram，在搜尋欄輸入你在 Part 2 設定的 Bot 使用者名稱（就是那個以 <code>bot</code> 結尾的名稱，例如 <code>my_ai_agent_2026_bot</code>），點進去傳送：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>你好
+</code></pre></div>
+<p>如果 Bot 回覆了，恭喜！你的 AI Agent 已經上線了 🎉</p>
+<h3 id="42">4.2 執行終端機指令<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>這是 AI Agent 跟一般 LLM 最大的差別。傳送：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>告訴我現在這台電腦的記憶體使用量
+</code></pre></div>
+<p>Bot 會直接在你的電腦上執行指令，然後把結果傳回來——不是告訴你怎麼查，而是<strong>直接幫你查完了</strong>。</p>
+<h3 id="43">4.3 操作檔案<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>傳送：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>列出我桌面上的檔案
+</code></pre></div>
+<p>Bot 會使用 terminal 工具，執行 <code>ls</code> 指令，然後把你桌面上的檔案列出來。</p>
+<h3 id="44">4.4 想想看：還能做什麼？<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p>試試看這些指令，體驗 AI Agent 的能力：</p>
+<ul>
+<li><code>幫我建立一個叫 test.txt 的檔案，裡面寫上今天的日期</code></li>
+<li><code>幫我查今天台北的天氣</code></li>
+<li><code>列出最近修改過的五個檔案</code></li>
+</ul>
+<hr />
+<h2 id="part-5">Part 5：日常使用<a class="headerlink" href="#part-5" title="Permanent link">&para;</a></h2>
+<h3 id="agent">啟動 Agent<a class="headerlink" href="#agent" title="Permanent link">&para;</a></h3>
+<p>每次要使用時，在終端機輸入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<h3 id="agent_1">停止 Agent<a class="headerlink" href="#agent_1" title="Permanent link">&para;</a></h3>
+<p>不用時停掉，節省資源：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>stop
+</code></pre></div>
+<h3 id="_4">切換模型<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>遇到 Rate Limit 錯誤時，可以換一個模型試試：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>hermes<span class="w"> </span>model
+</code></pre></div>
+<p>會開啟互動介面讓你選擇不同的 Provider 和模型。</p>
+<h3 id="_5">重設對話<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>在 Telegram 中輸入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>/reset
+</code></pre></div>
+<h3 id="_6">檢查問題<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>hermes<span class="w"> </span>doctor
+</code></pre></div>
+<p>會自動掃描環境，列出需要修復的問題。</p>
+<hr />
+<h2 id="_7">常見問題<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="bot">Bot 沒有回應<a class="headerlink" href="#bot" title="Permanent link">&para;</a></h3>
+<p><strong>可能原因 1：Gateway 沒有在跑</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>status
+</code></pre></div>
+<p>如果沒在跑，啟動它：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<p><strong>可能原因 2：多個 Gateway 衝突</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>pkill<span class="w"> </span>-f<span class="w"> </span>hermes
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>rm<span class="w"> </span>-f<span class="w"> </span>~/.hermes/gateway.pid
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<p><strong>可能原因 3：Telegram 連線問題</strong></p>
+<p>檢查 error log：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>cat<span class="w"> </span>~/.hermes/logs/gateway.error.log<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-10
+</code></pre></div>
+<h3 id="rate-limit">看到 Rate Limit 錯誤<a class="headerlink" href="#rate-limit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>HTTP 429 (RESOURCE_EXHAUSTED): You exceeded your current quota
+</code></pre></div>
+<p>這是 Gemini 免費方案的限制（每分鐘約 20 次請求）。</p>
+<p><strong>解決方式</strong>：</p>
+<ul>
+<li>等 1-2 分鐘再試，每次提問之間不要太快連續傳訊息</li>
+<li>或切換到其他模型：執行 <code>hermes model</code>，選擇 <code>gemini-2.5-flash</code> 或 <code>gemini-2.5-flash-lite</code></li>
+</ul>
+<blockquote>
+<p>💡 Hermes 每次互動會送出多次 API 呼叫（你的訊息、工具呼叫、結果回傳等），所以一個簡單的問答可能就用掉 4-5 次請求。</p>
+</blockquote>
+<h3 id="unauthorized">看到 Unauthorized 錯誤<a class="headerlink" href="#unauthorized" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Unauthorized user: XXXXXXX on telegram
+</code></pre></div>
+<p>執行以下指令允許所有使用者存取：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>hermes<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>GATEWAY_ALLOW_ALL_USERS<span class="w"> </span><span class="nb">true</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>pkill<span class="w"> </span>-f<span class="w"> </span>hermes
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>rm<span class="w"> </span>-f<span class="w"> </span>~/.hermes/gateway.pid
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<h3 id="bot-terminal">Bot 說「我沒有 terminal 工具」<a class="headerlink" href="#bot-terminal" title="Permanent link">&para;</a></h3>
+<p>這通常是 Gemini 3 系列模型的相容性問題。請使用以下模型：</p>
+<ul>
+<li>✅ <code>gemini-2.5-flash-lite</code>（推薦）</li>
+<li>✅ <code>gemini-2.5-flash</code></li>
+<li>❌ <code>gemini-3-flash-preview</code>（thought_signature 問題）</li>
+<li>❌ <code>gemini-3-pro-preview</code>（thought_signature 問題）</li>
+</ul>
+<p>切換模型：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>hermes<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>model.default<span class="w"> </span>gemini-2.5-flash-lite
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>pkill<span class="w"> </span>-f<span class="w"> </span>hermes
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>rm<span class="w"> </span>-f<span class="w"> </span>~/.hermes/gateway.pid
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<p>執行完後<strong>等約 1 分鐘</strong>讓 Gateway 完全啟動，再回到 Telegram 輸入 <code>/reset</code> 重設對話，然後重新傳訊息測試。</p>
+<hr />
+<h2 id="_8">模型選擇指南<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>費用</th>
+<th>特點</th>
+<th>建議用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gemini-2.5-flash-lite</td>
+<td>免費</td>
+<td>速度快、rate limit 較寬鬆</td>
+<td>日常使用（推薦）</td>
+</tr>
+<tr>
+<td>gemini-2.5-flash</td>
+<td>免費</td>
+<td>能力較強、rate limit 較嚴</td>
+<td>需要更好推理能力時</td>
+</tr>
+<tr>
+<td>gemini-2.5-pro</td>
+<td>免費（有限）</td>
+<td>最強推理能力</td>
+<td>複雜任務</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 如果你的電腦有 16GB 以上記憶體，也可以用 <a href="https://ollama.com/">Ollama</a> 跑本地模型（例如 <code>qwen3:8b</code>），完全離線、不花 API 費用，但需要更多設定。</p>
+</blockquote>
+<hr />
+<h2 id="_9">作業<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>完成基本設定後，完成以下作業。</p>
+<h3 id="agent-system-prompt">作業：自訂 Agent 的角色（System Prompt）<a class="headerlink" href="#agent-system-prompt" title="Permanent link">&para;</a></h3>
+<p>Hermes 的個性存在 <code>~/.hermes/SOUL.md</code> 這個檔案，直接編輯它就能改變 Agent 的行為規則。</p>
+<p><strong>步驟：</strong></p>
+<ol>
+<li>在終端機開啟檔案：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>nano<span class="w"> </span>~/.hermes/SOUL.md
+</code></pre></div>
+<ol>
+<li>在最上方加入你想設定的規則。以下是一個範例，你可以自由修改：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>你是生成式AI人文導論課程的助教。每次回覆都要用繁體中文，語氣要親切。
+</code></pre></div>
+<ol>
+<li>
+<p>按 <code>Ctrl + X</code>，再按 <code>Y</code>，再按 Enter 儲存。</p>
+</li>
+<li>
+<p>重啟 Gateway：</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>pkill<span class="w"> </span>-f<span class="w"> </span>hermes
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>rm<span class="w"> </span>-f<span class="w"> </span>~/.hermes/gateway.pid
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<ol>
+<li>到 Telegram 輸入 <code>/reset</code>，然後傳一則訊息，確認 Agent 的回應符合你設定的規則。</li>
+</ol>
+<p><strong>成功標準</strong>：Bot 的回應反映出你設定的個性或規則。</p>
+<p><strong>繳交格式</strong>：<code>.txt</code> 或 <code>.md</code> 檔，需包含：</p>
+<ol>
+<li>修改前：你問的問題，以及 Agent 的回答</li>
+<li>你加入 <code>SOUL.md</code> 的 system prompt 內容</li>
+<li>修改後：相同的問題，以及 Agent 的回答（應與修改前不同）</li>
+</ol>
+<hr />
+<h3 id="tool-calling">加分作業：Tool Calling<a class="headerlink" href="#tool-calling" title="Permanent link">&para;</a></h3>
+<p>給 Agent 一個需要用工具才能完成的任務，觀察它如何自動選擇工具。任務不限，以下是幾個範例供參考：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>幫我對這段文字做中文斷詞：「生成式人工智慧正在改變人文學科的研究方式」
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>查今天台北的天氣
+</code></pre></div>
+<p><strong>成功標準</strong>：Bot 自動呼叫工具完成任務，回傳實際結果，而不只是用文字說明怎麼做。</p>
+<hr />
+<h2 id="_10">延伸閱讀<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://hermes-agent.nousresearch.com/docs/">Hermes Agent 官方文件</a></li>
+<li><a href="https://github.com/NousResearch/hermes-agent">Hermes Agent GitHub</a></li>
+<li><a href="https://aistudio.google.com/">Google AI Studio</a></li>
+<li><a href="https://ollama.com/">Ollama 官網</a>（本地模型方案）</li>
+</ul>
+<hr />
+<h2 id="windows">附錄：Windows 使用者完整指南<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h2>
+<p>Hermes Agent <strong>不支援原生 Windows</strong>，必須透過 WSL2（Windows Subsystem for Linux）執行。WSL2 會在你的 Windows 裡跑一個輕量的 Linux 環境，Hermes 就在裡面運作。</p>
+<p>不用擔心，設定並不困難，以下是完整步驟。</p>
+<h3 id="1-wsl2">步驟 1：安裝 WSL2<a class="headerlink" href="#1-wsl2" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>以系統管理員身份</strong>開啟 PowerShell（在開始選單搜尋「PowerShell」，右鍵點選「以系統管理員身份執行」）</li>
+<li>執行以下指令：</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
+</code></pre></div>
+<ol>
+<li>等待安裝完成，然後<strong>重新開機</strong></li>
+<li>重開機後，Windows 會自動開啟 Ubuntu 視窗，要求你設定：</li>
+<li><strong>使用者名稱</strong>（小寫英文，例如 <code>student</code>）</li>
+<li><strong>密碼</strong>（輸入時不會顯示，這是正常的，打完按 Enter）</li>
+</ol>
+<blockquote>
+<p>⚠️ 請記住這組密碼，之後安裝套件時會用到。</p>
+</blockquote>
+<h3 id="2">步驟 2：更新系統套件<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>在 Ubuntu（WSL）終端裡執行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
+</code></pre></div>
+<p>系統會要求你輸入剛才設定的密碼。</p>
+<h3 id="3-python">步驟 3：確認 Python 版本<a class="headerlink" href="#3-python" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>python3<span class="w"> </span>--version
+</code></pre></div>
+<p>需要 3.11 以上。WSL2 的 Ubuntu 通常自帶符合條件的版本。如果版本太舊：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3.12<span class="w"> </span>-y
+</code></pre></div>
+<h3 id="4-hermes-agent">步驟 4：安裝 Hermes Agent<a class="headerlink" href="#4-hermes-agent" title="Permanent link">&para;</a></h3>
+<p>跟 Mac / Linux 完全一樣的指令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>安裝完成後，按照本教學 <strong>Part 3</strong> 的設定精靈步驟操作即可。</p>
+<h3 id="5-gateway">步驟 5：啟動 Gateway<a class="headerlink" href="#5-gateway" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>hermes<span class="w"> </span>gateway<span class="w"> </span>start
+</code></pre></div>
+<p>然後到 Telegram 測試你的 Bot。</p>
+<h3 id="windows_1">Windows 使用者的注意事項<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h3>
+<p><strong>每次重開機後需要重新啟動：</strong></p>
+<p>WSL2 不會自動啟動 Hermes Gateway。每次開機後需要：</p>
+<ol>
+<li>開啟 Ubuntu（WSL）終端</li>
+<li>執行 <code>hermes gateway start</code></li>
+</ol>
+<p><strong>檔案路徑不同：</strong></p>
+<p>在 WSL2 裡，你的 Windows 檔案在 <code>/mnt/c/</code> 底下。不確定自己的使用者名稱，可以執行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$USER</span>
+</code></pre></div>
+<p>例如使用者名稱是 <code>student</code>，路徑就是：</p>
+<ul>
+<li>Windows 桌面：<code>/mnt/c/Users/student/Desktop</code></li>
+<li>Windows 文件：<code>/mnt/c/Users/student/Documents</code></li>
+</ul>
+<p>所以如果你要 Bot 列出 Windows 桌面的檔案，要這樣說：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>列出 /mnt/c/Users/你的使用者名稱/Desktop 裡的檔案
+</code></pre></div>
+<p><strong>開啟 WSL 終端的方式：</strong></p>
+<ul>
+<li>在開始選單搜尋「Ubuntu」</li>
+<li>或開啟 PowerShell / CMD，輸入 <code>wsl</code></li>
+</ul>
+<h3 id="windows_2">常見的 Windows 專屬問題<a class="headerlink" href="#windows_2" title="Permanent link">&para;</a></h3>
+<p><strong>「bad interpreter」錯誤：</strong></p>
+<p>表示你在原生 Windows 的 PowerShell 或 CMD 裡執行了 Hermes 指令。請確認你是在 <strong>WSL2 的 Ubuntu 終端</strong>裡操作。</p>
+<p><strong>WSL2 沒有啟動：</strong></p>
+<p>如果 <code>wsl --install</code> 失敗，可能需要先在 BIOS 中啟用虛擬化（Virtualization）。重新開機時進入 BIOS，找到 Intel VT-x 或 AMD-V 選項並啟用。</p>
+<p><strong>hermes 指令找不到：</strong></p>
+<p>如果安裝完後 <code>hermes</code> 指令無法使用，執行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.local/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>要讓這個設定永久生效：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export PATH=&quot;$HOME/.local/bin:$PATH&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<hr />
+<p><em>本教學基於 Hermes Agent v0.10.0，使用 Gemini 2.5 Flash Lite 模型。</em>
+<em>最後更新：2026 年 4 月</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到頂端
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.top", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u8907\u88fd", "clipboard.copy": "\u8907\u88fd", "search.result.more.one": "\u6b64\u9801\u5c1a\u6709 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.more.other": "\u6b64\u9801\u5c1a\u6709 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.none": "\u6c92\u6709\u7b26\u5408\u7684\u9805\u76ee", "search.result.one": "\u627e\u5230 1 \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.other": "\u627e\u5230 # \u500b\u7b26\u5408\u7684\u9805\u76ee", "search.result.placeholder": "\u6253\u5b57\u9032\u884c\u641c\u5c0b", "search.result.term.missing": "\u7f3a\u5c11\u5b57\u8a5e", "select.version": "\u9078\u64c7\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
